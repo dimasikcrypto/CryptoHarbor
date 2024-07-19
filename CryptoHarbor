@@ -1,0 +1,24 @@
+# scripts/data_collection.py
+
+import requests
+import pandas as pd
+
+def fetch_crypto_data(api_url, endpoint, params):
+    """
+    Fetch data from a cryptocurrency network.
+    
+    :param api_url: Base URL of the cryptocurrency API
+    :param endpoint: API endpoint for the specific data
+    :param params: Dictionary of parameters for the API call
+    :return: DataFrame with cryptocurrency data
+    """
+    response = requests.get(f'{api_url}/{endpoint}', params=params)
+    response.raise_for_status()
+    data = response.json()
+    df = pd.DataFrame(data)
+    return df
+
+# Example usage:
+# params = {'start': '2021-01-01', 'end': '2021-12-31'}
+# crypto_data = fetch_crypto_data('https://api.coindesk.com/v1/bpi', 'historical/close.json', params)
+# print(crypto_data)
